@@ -657,6 +657,7 @@ func autoConvert_v1_SecurityContextConstraints_To_security_SecurityContextConstr
 	out.AllowHostPorts = in.AllowHostPorts
 	out.AllowHostPID = in.AllowHostPID
 	out.AllowHostIPC = in.AllowHostIPC
+	out.HostUsers = security.HostUsersStrategyType(in.HostUsers)
 	out.DefaultAllowPrivilegeEscalation = (*bool)(unsafe.Pointer(in.DefaultAllowPrivilegeEscalation))
 	out.AllowPrivilegeEscalation = (*bool)(unsafe.Pointer(in.AllowPrivilegeEscalation))
 	if err := Convert_v1_SELinuxContextStrategyOptions_To_security_SELinuxContextStrategyOptions(&in.SELinuxContext, &out.SELinuxContext, s); err != nil {
@@ -693,6 +694,7 @@ func autoConvert_security_SecurityContextConstraints_To_v1_SecurityContextConstr
 	out.AllowHostPorts = in.AllowHostPorts
 	out.AllowHostPID = in.AllowHostPID
 	out.AllowHostIPC = in.AllowHostIPC
+	out.HostUsers = v1.HostUsersStrategyType(in.HostUsers)
 	out.DefaultAllowPrivilegeEscalation = (*bool)(unsafe.Pointer(in.DefaultAllowPrivilegeEscalation))
 	out.AllowPrivilegeEscalation = (*bool)(unsafe.Pointer(in.AllowPrivilegeEscalation))
 	if err := Convert_security_SELinuxContextStrategyOptions_To_v1_SELinuxContextStrategyOptions(&in.SELinuxContext, &out.SELinuxContext, s); err != nil {
