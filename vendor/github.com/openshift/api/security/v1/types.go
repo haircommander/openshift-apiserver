@@ -37,6 +37,7 @@ var AllowAllCapabilities corev1.Capability = "*"
 // +kubebuilder:printcolumn:name="Volumes",type=string,JSONPath=.volumes,description="White list of allowed volume plugins"
 // +kubebuilder:singular=securitycontextconstraint
 // +openshift:compatibility-gen:level=1
+// +kubebuilder:metadata:annotations=release.openshift.io/bootstrap-required=true
 type SecurityContextConstraints struct {
 	metav1.TypeMeta `json:",inline"`
 
@@ -92,6 +93,14 @@ type SecurityContextConstraints struct {
 	AllowHostPID bool `json:"allowHostPID" protobuf:"varint,11,opt,name=allowHostPID"`
 	// AllowHostIPC determines if the policy allows host ipc in the containers.
 	AllowHostIPC bool `json:"allowHostIPC" protobuf:"varint,12,opt,name=allowHostIPC"`
+	// hostUsers determines if the policy allows host users in containers.
+	// Valid values are "Allowed", "Disallowed" and omitted.
+	// When omitted, this means no opinion and the platform is left to choose a reasonable default.
+	// The current default is "Allowed".
+	// +openshift:enable:FeatureGate=UserNamespacesSupport
+	// +kubebuilder:validation:Enum="Allowed";"Disallowed";""
+	// +kubebuilder:validation:Optional
+	HostUsers HostUsersStrategyType `json:"hostUsers" protobuf:"varint,26,opt,name=allowHostUsers"`
 	// DefaultAllowPrivilegeEscalation controls the default setting for whether a
 	// process can gain more privileges than its parent process.
 	// +optional
@@ -252,6 +261,9 @@ type IDRange struct {
 	Max int64 `json:"max,omitempty" protobuf:"varint,2,opt,name=max"`
 }
 
+// HostUsersStrategyType shows the allowable values for HostUsers
+type HostUsersStrategyType string
+
 // SELinuxContextStrategyType denotes strategy types for generating SELinux options for a
 // SecurityContext
 type SELinuxContextStrategyType string
@@ -269,6 +281,13 @@ type SupplementalGroupsStrategyType string
 type FSGroupStrategyType string
 
 const (
+	// HostUsersStrategyAllowed allows the use of HostUsers in a pod.
+	HostUsersStrategyAllowed HostUsersStrategyType = "Allowed"
+	// HostUsersStrategyDisallowed denies the use of HostUsers in a pod.
+	HostUsersStrategyDisallowed HostUsersStrategyType = "Disallowed"
+	// HostUsersStrategyEmpty will set to the default, which is currently "Allowed".
+	HostUsersStrategyEmpty HostUsersStrategyType = ""
+
 	// container must have SELinux labels of X applied.
 	SELinuxStrategyMustRunAs SELinuxContextStrategyType = "MustRunAs"
 	// container may make requests for any SELinux context labels.

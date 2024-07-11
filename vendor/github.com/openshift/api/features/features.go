@@ -68,14 +68,14 @@ var (
 				reportProblemsToJiraComponent("Routing").
 				contactPerson("miciah").
 				productScope(ocpSpecific).
-				enableIn(configv1.DevPreviewNoUpgrade, configv1.TechPreviewNoUpgrade).
+				enableIn(configv1.DevPreviewNoUpgrade).
 				mustRegister()
 
 	FeatureGateOpenShiftPodSecurityAdmission = newFeatureGate("OpenShiftPodSecurityAdmission").
 							reportProblemsToJiraComponent("auth").
-							contactPerson("stlaz").
+							contactPerson("ibihim").
 							productScope(ocpSpecific).
-							enableIn(configv1.Default, configv1.DevPreviewNoUpgrade, configv1.TechPreviewNoUpgrade).
+							enableIn(configv1.DevPreviewNoUpgrade, configv1.TechPreviewNoUpgrade).
 							mustRegister()
 
 	FeatureGateExternalCloudProvider = newFeatureGate("ExternalCloudProvider").
@@ -203,6 +203,13 @@ var (
 						enableIn(configv1.Default, configv1.DevPreviewNoUpgrade, configv1.TechPreviewNoUpgrade).
 						mustRegister()
 
+	FeatureGateVSphereMultiVCenters = newFeatureGate("VSphereMultiVCenters").
+					reportProblemsToJiraComponent("splat").
+					contactPerson("vr4manta").
+					productScope(ocpSpecific).
+					enableIn(configv1.DevPreviewNoUpgrade, configv1.TechPreviewNoUpgrade).
+					mustRegister()
+
 	FeatureGateVSphereStaticIPs = newFeatureGate("VSphereStaticIPs").
 					reportProblemsToJiraComponent("splat").
 					contactPerson("rvanderp3").
@@ -235,10 +242,17 @@ var (
 						reportProblemsToJiraComponent("Networking/cluster-network-operator").
 						contactPerson("kyrtapz").
 						productScope(ocpSpecific).
-						enableIn(configv1.DevPreviewNoUpgrade, configv1.TechPreviewNoUpgrade).
+						enableIn(configv1.Default, configv1.DevPreviewNoUpgrade, configv1.TechPreviewNoUpgrade).
 						mustRegister()
 
 	FeatureGateHardwareSpeed = newFeatureGate("HardwareSpeed").
+					reportProblemsToJiraComponent("etcd").
+					contactPerson("hasbro17").
+					productScope(ocpSpecific).
+					enableIn(configv1.Default, configv1.DevPreviewNoUpgrade, configv1.TechPreviewNoUpgrade).
+					mustRegister()
+
+	FeatureGateBackendQuotaGiB = newFeatureGate("EtcdBackendQuota").
 					reportProblemsToJiraComponent("etcd").
 					contactPerson("hasbro17").
 					productScope(ocpSpecific).
@@ -289,7 +303,7 @@ var (
 					reportProblemsToJiraComponent("Monitoring").
 					contactPerson("slashpai").
 					productScope(ocpSpecific).
-					enableIn(configv1.DevPreviewNoUpgrade, configv1.TechPreviewNoUpgrade).
+					enableIn(configv1.Default, configv1.DevPreviewNoUpgrade, configv1.TechPreviewNoUpgrade).
 					mustRegister()
 
 	FeatureGateInstallAlternateInfrastructureAWS = newFeatureGate("InstallAlternateInfrastructureAWS").
@@ -458,13 +472,14 @@ var (
 						reportProblemsToJiraComponent("Storage / Kubernetes External Components").
 						contactPerson("rbednar").
 						productScope(ocpSpecific).
-						enableIn(configv1.DevPreviewNoUpgrade, configv1.TechPreviewNoUpgrade).
+						enableIn(configv1.Default, configv1.DevPreviewNoUpgrade, configv1.TechPreviewNoUpgrade).
 						mustRegister()
 
 	FeatureGateClusterAPIInstallAWS = newFeatureGate("ClusterAPIInstallAWS").
 					reportProblemsToJiraComponent("Installer").
 					contactPerson("r4f4").
 					productScope(ocpSpecific).
+					enableIn(configv1.Default, configv1.DevPreviewNoUpgrade, configv1.TechPreviewNoUpgrade).
 					mustRegister()
 
 	FeatureGateClusterAPIInstallAzure = newFeatureGate("ClusterAPIInstallAzure").
@@ -477,6 +492,7 @@ var (
 					reportProblemsToJiraComponent("Installer").
 					contactPerson("bfournie").
 					productScope(ocpSpecific).
+					enableIn(configv1.DevPreviewNoUpgrade, configv1.TechPreviewNoUpgrade).
 					mustRegister()
 
 	FeatureGateClusterAPIInstallIBMCloud = newFeatureGate("ClusterAPIInstallIBMCloud").
@@ -489,23 +505,41 @@ var (
 						reportProblemsToJiraComponent("Installer").
 						contactPerson("yanhua121").
 						productScope(ocpSpecific).
+						enableIn(configv1.Default, configv1.DevPreviewNoUpgrade, configv1.TechPreviewNoUpgrade).
 						mustRegister()
 
 	FeatureGateClusterAPIInstallOpenStack = newFeatureGate("ClusterAPIInstallOpenStack").
 						reportProblemsToJiraComponent("Installer").
 						contactPerson("stephenfin").
 						productScope(ocpSpecific).
+						enableIn(configv1.Default, configv1.DevPreviewNoUpgrade, configv1.TechPreviewNoUpgrade).
 						mustRegister()
 
 	FeatureGateClusterAPIInstallPowerVS = newFeatureGate("ClusterAPIInstallPowerVS").
 						reportProblemsToJiraComponent("Installer").
 						contactPerson("mjturek").
 						productScope(ocpSpecific).
+						enableIn(configv1.DevPreviewNoUpgrade, configv1.TechPreviewNoUpgrade).
 						mustRegister()
 
 	FeatureGateClusterAPIInstallVSphere = newFeatureGate("ClusterAPIInstallVSphere").
 						reportProblemsToJiraComponent("Installer").
 						contactPerson("rvanderp3").
 						productScope(ocpSpecific).
+						enableIn(configv1.Default, configv1.DevPreviewNoUpgrade, configv1.TechPreviewNoUpgrade).
 						mustRegister()
+
+	FeatureGateUserNamespacesSupport = newFeatureGate("UserNamespacesSupport").
+						reportProblemsToJiraComponent("Node").
+						contactPerson("haircommander").
+						productScope(kubernetes).
+						enableIn(configv1.DevPreviewNoUpgrade, configv1.TechPreviewNoUpgrade).
+						mustRegister()
+
+	FeatureGateUserNamespacesPodSecurityStandards = newFeatureGate("UserNamespacesPodSecurityStandards").
+							reportProblemsToJiraComponent("Node").
+							contactPerson("haircommander").
+							productScope(kubernetes).
+							enableIn(configv1.DevPreviewNoUpgrade, configv1.TechPreviewNoUpgrade).
+							mustRegister()
 )

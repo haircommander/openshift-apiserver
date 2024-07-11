@@ -210,6 +210,7 @@ message SELinuxContextStrategyOptions {
 // +kubebuilder:printcolumn:name="Volumes",type=string,JSONPath=.volumes,description="White list of allowed volume plugins"
 // +kubebuilder:singular=securitycontextconstraint
 // +openshift:compatibility-gen:level=1
+// +kubebuilder:metadata:annotations=release.openshift.io/bootstrap-required=true
 message SecurityContextConstraints {
   // metadata is the standard object's metadata.
   // More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
@@ -273,6 +274,15 @@ message SecurityContextConstraints {
 
   // AllowHostIPC determines if the policy allows host ipc in the containers.
   optional bool allowHostIPC = 12;
+
+  // hostUsers determines if the policy allows host users in containers.
+  // Valid values are "Allowed", "Disallowed" and omitted.
+  // When omitted, this means no opinion and the platform is left to choose a reasonable default.
+  // The current default is "Allowed".
+  // +openshift:enable:FeatureGate=UserNamespacesSupport
+  // +kubebuilder:validation:Enum="Allowed";"Disallowed";""
+  // +kubebuilder:validation:Optional
+  optional string allowHostUsers = 26;
 
   // DefaultAllowPrivilegeEscalation controls the default setting for whether a
   // process can gain more privileges than its parent process.
